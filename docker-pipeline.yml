@@ -10,13 +10,11 @@ resources:
 - repo: self
 
 variables:
-- group: terraform-vars
   dockerRegistryServiceConnection: '0da3dd82-2782-4b1f-8ffe-f42a00c42181'
   imageRepository: 'olehratinskiyaspnetwebapi'
   containerRegistry: 'exampleacror13.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   vmImageName: 'ubuntu-latest'
-
 
 stages:
 - stage: Build
@@ -41,14 +39,10 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    - task: AzureRmWebAppDeployment@4
-      displayName: Deploy web app from ACR docker image
+    - task: AzureWebAppContainer@1
+      displayName: Azure Web App on Container Deploy
       inputs:
-        ConnectionType: 'AzureRM'
-        azureSubscription: '$(AZURE_SUBSCRIPTION_ID)'
-        appType: 'webAppContainer'
-        WebAppName: 'bestrongwebapp'
-        ResourceGroupName: '$(resourceGroupName)'
-        DockerNamespace: '$(containerRegistry)'
-        DockerRepository: '$(imageRepository)'
-        DockerImageTag: 'latest'
+        appName: 'bestrongwebapp'
+        azureSubscription: 'azure sp resource manager'
+        containers: |
+          $(dockerRegistryServiceConnection)/$(imageRepository):latest
