@@ -41,10 +41,19 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    - task: AzureWebAppContainer@1
-      displayName: Azure Web App on Container Deploy
+    # - task: AzureWebAppContainer@1
+    #   displayName: Azure Web App on Container Deploy
+    #   inputs:
+    #     appName: 'bestrongwebapp'
+    #     azureSubscription: 'azure sp resource manager'
+    #     containers: |
+    #       $(containerRegistry)/$(imageRepository):latest
+    - task: AzureRmWebAppDeployment@4
       inputs:
-        appName: 'bestrongwebapp'
-        azureSubscription: 'azure sp resource manager'
-        containers: |
-          $(containerRegistry)/$(imageRepository):latest
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Azure subscription 1(1)(740d6962-3a0d-48e7-9ccc-a962da968e9f)'
+        appType: 'webAppContainer'
+        WebAppName: 'bestrongwebapp'
+        DockerNamespace: 'exampleacror13.azurecr.io'
+        DockerRepository: 'olehratinskiyaspnetwebapi'
+        DockerImageTag: 'latest'
