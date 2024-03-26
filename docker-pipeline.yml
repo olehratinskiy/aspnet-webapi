@@ -1,0 +1,54 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+- main
+
+resources:
+- repo: self
+
+variables:
+- group: terraform-vars
+  dockerRegistryServiceConnection: '0da3dd82-2782-4b1f-8ffe-f42a00c42181'
+  imageRepository: 'olehratinskiyaspnetwebapi'
+  containerRegistry: 'exampleacror13.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  vmImageName: 'ubuntu-latest'
+
+
+stages:
+- stage: Build
+  displayName: Build and push stage
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+  
+  - job: Deploy_web_app
+    displayName: Deploy web app
+    condition: and(not(failed()), ne(variables['Build.Reason'], 'PullRequest'))
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: AzureRmWebAppDeployment@4
+      displayName: Deploy web app from ACR docker image
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: '$(AZURE_SUBSCRIPTION_ID)'
+        appType: 'webAppContainer'
+        WebAppName: 'bestrongwebapp'
+        ResourceGroupName: '$(resourceGroupName)'
+        DockerNamespace: '$(containerRegistry)'
+        DockerRepository: '$(imageRepository)'
+        DockerImageTag: 'latest'
