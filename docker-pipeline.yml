@@ -45,4 +45,4 @@ stages:
         appName: 'bestrongwebapp'
         azureSubscription: 'azure sp resource manager'
         containers: |
-          $(dockerRegistryServiceConnection)/$(imageRepository):latest
+          $(containerRegistry)/$(imageRepository):latest
