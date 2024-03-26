@@ -35,6 +35,7 @@ stages:
         tags: latest
   
   - job: Deploy_web_app
+    dependsOn: Build
     displayName: Deploy web app
     condition: and(not(failed()), ne(variables['Build.Reason'], 'PullRequest'))
     pool:
