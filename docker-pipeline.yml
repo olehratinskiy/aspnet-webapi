@@ -51,9 +51,9 @@ stages:
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
-        azureSubscription: 'Azure subscription 1(1)(740d6962-3a0d-48e7-9ccc-a962da968e9f)'
+        azureSubscription: 'Azure subscription 1(740d6962-3a0d-48e7-9ccc-a962da968e9f)'
         appType: 'webAppContainer'
         WebAppName: 'bestrongwebapp'
-        DockerNamespace: 'exampleacror13.azurecr.io'
-        DockerRepository: 'olehratinskiyaspnetwebapi'
+        DockerNamespace: '$(containerRegistry)'
+        DockerRepository: '$(imageRepository)'
         DockerImageTag: 'latest'
