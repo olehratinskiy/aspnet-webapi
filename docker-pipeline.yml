@@ -32,6 +32,7 @@ stages:
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
+        tags: latest
   
   - job: Deploy_web_app
     displayName: Deploy web app
