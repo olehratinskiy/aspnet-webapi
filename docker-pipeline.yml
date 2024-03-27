@@ -10,7 +10,7 @@ resources:
 - repo: self
 
 variables:
-  dockerRegistryServiceConnection: '2edfe450-8d5a-4c24-bb70-6d047986203d'
+  dockerRegistryServiceConnection: '8f7e3673-36e4-47c1-992c-157610a17134'
   imageRepository: 'olehratinskiyaspnetwebapi'
   containerRegistry: 'exampleacror13.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
