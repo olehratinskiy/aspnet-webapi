@@ -10,7 +10,7 @@ resources:
 - repo: self
 
 variables:
-  dockerRegistryServiceConnection: '8f7e3673-36e4-47c1-992c-157610a17134'
+  dockerRegistryServiceConnection: '1357dfda-cb4c-4aec-957f-21c0a5916dbd'
   imageRepository: 'olehratinskiyaspnetwebapi'
   containerRegistry: 'exampleacror13.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
@@ -42,13 +42,6 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    # - task: AzureWebAppContainer@1
-    #   displayName: Azure Web App on Container Deploy
-    #   inputs:
-    #     appName: 'bestrongwebapp'
-    #     azureSubscription: 'azure sp resource manager'
-    #     containers: |
-    #       $(containerRegistry)/$(imageRepository):latest
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
